@@ -41,9 +41,6 @@ public:
 	bool isSafe1(int row, int col, int** sq) {
 		int j ;
 		int i = col;
-		// check col
-		
-		i = col;
 		for ( j = 0; j <= row; ++j){
 			if (sq[j][i]){
 				return false;
@@ -58,7 +55,6 @@ public:
 				}
 			}
 		}
-		// for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
 		for (i = row, j = col; i >= 0 && j >= 0; i--, j--) {
 			if ((i < N) && (i >= 0) && (j < N) && (j >= 0)) {
 				if (sq[i][j] == 1) {
@@ -83,10 +79,8 @@ public:
 		int i;
 		int j;
 		for (int i = row; i < col; ++i){
-			bool isSafe = false;
 			for (j = 0; j < col; ++j) { //  queen == i
 				if (isSafe1(i, j, sq)) {
-					isSafe = true;
 					sq[i][j] = 1;
 					bool retVal = solveNqueens(col, row + 1, sq);
 					if (retVal == false){
