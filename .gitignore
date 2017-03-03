@@ -2,6 +2,25 @@
 Thumbs.db
 ehthumbs.db
 
+# Unneeded Files
+*.sdf
+*.sln
+*.suo
+*.aps
+*.rc
+*.vcxproj
+*.filters
+*.user
+*.obj
+*.res
+*.idb
+*.pdb
+*.exe
+*.ilk
+*.opensdf
+*.log
+*.tlog
+
 # Folder config file
 Desktop.ini
 
