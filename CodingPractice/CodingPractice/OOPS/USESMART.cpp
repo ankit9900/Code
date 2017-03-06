@@ -49,6 +49,17 @@ int main() {
 		SmartPtr<T> sp(new T("ankit", 10));
 		SmartPtr<T> sp2(new T("ankit", 10));
 		SmartPtr<T> sp3(sp2);
+
+		cout << sp3.getRaw() << endl;
+		cout << sp2.getRaw() << endl;
+
+		cout << sp3.getRefCount() << endl;
+		cout << sp2.getRefCount() << endl;
+
+		sp2.reset();
+		cout << sp3.getRefCount() << endl;
+		cout << sp2.getRefCount() << endl;
+
 	    SmartPtr<T> sp4(new T("ankit", 10));
 		SmartPtr<T> sp5;
 		sp5 = sp2;
