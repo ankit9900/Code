@@ -82,6 +82,7 @@ public:
 	SmartPtr& operator=(const SmartPtr& tmp) {
 		r->deref();
 		r = tmp.r;
+		r->ref();
 		return *this;
 	}
 
