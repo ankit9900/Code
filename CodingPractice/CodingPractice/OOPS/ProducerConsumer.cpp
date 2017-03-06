@@ -21,6 +21,10 @@ public:
 
 	}
 
+	~ProCon() {
+		delete[] m_buffer;
+	}
+
 	long int gen() {
 		return rand() % 100 + 1;
 	}
@@ -39,9 +43,11 @@ public:
 		}
 		return false;
 	}
+
 	bool checkUnderFlow() {
-		if (m_currentIndex < 0)
+		if (m_currentIndex < 0) {
 			return true;
+		}
 		return false;
 	}
 
@@ -59,6 +65,7 @@ public:
 			m_cv.notify_all();
 		}
 	}
+
 	void consumer() {
 		while (1) {
 			m_mutex.lock();
@@ -73,7 +80,6 @@ public:
 			m_cv.notify_all();
 		}
 	}
-
 };
 int main() {
 	ProCon obj(10);
