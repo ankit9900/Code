@@ -1,80 +1,29 @@
+#ifndef MARKETPRICESIMPL_H
+#define MARKETPRICESIMPL_H
+
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
 #include "MarketPrices.h"
-#define map unordered_map
+
 using namespace std;
+typedef vector<pair < char*, unsigned int > >  VECTOR_PAIR;
+typedef multiset<unsigned int, char*> MSET;
 
 class OrderBook {
-	unordered_map<char*, unsigned int> m_bidMap;
-	unordered_map<char*, unsigned int> m_offerMap;
-	
+	VECTOR_PAIR m_bidVec;
+	VECTOR_PAIR m_offerVec;
+
+	MSET m_bidSet;
+	MSET m_offerSet;
 public:
-	void sortBidMap() {
-		vector<pair<char*, unsigned int>> pairs(m_bidMap.begin(), m_bidMap.end());
-		sort(pairs.begin(), pairs.end(), [=](const std::pair<char*, unsigned int>& a, const std::pair<char*, unsigned int>& b)
-		{
-			return a.second > b.second;
-		});
-		m_bidMap.clear();
-		//copy(pairs.begin(), pairs.end(), inserter(m_bidMap, m_bidMap.begin()));
-		for (auto p : pairs){
-			m_bidMap.insert({ p.first, p.second });
-		}
-	}
+	VECTOR_PAIR * getBidVec();
+	VECTOR_PAIR * getOfferVec();
+	OrderBook(char* oid, int type, unsigned int price);
 
-	void sortOfferMap() {
-		vector<pair<char*, unsigned int>> pairs(m_offerMap.begin(), m_offerMap.end());
-		sort(pairs.begin(), pairs.end(), [=](std::pair<char*, unsigned int>& a, std::pair<char*, unsigned int>& b)
-		{
-			return a.second > b.second;
-		});
-		m_offerMap.clear();
-		copy(pairs.begin(), pairs.end(), inserter(m_offerMap, m_offerMap.begin()));
-	}
-
-	map<char*, unsigned int>* getbidMap() {
-		return &m_bidMap;
-	}
-
-	map<char*, unsigned int>* getofferMap() {
-		return &m_offerMap;
-	}
-
-	OrderBook(char* oid, int type, unsigned int price) {
-		if (type == 1) {
-			m_bidMap.insert(make_pair(oid, price));
-			sortBidMap();
-		}
-		else {
-			m_offerMap.insert(make_pair(oid, price));
-			sortOfferMap();
-		}
-	}
-
-	int updateOrderBook(char* oid, int type, unsigned int price) {
-		if (type == 1) {
-			m_bidMap.insert(make_pair(oid, price));
-			sortBidMap();
-		}
-		else {
-			m_offerMap.insert(make_pair(oid, price));
-			sortOfferMap();
-		}
-		return 1;
-	}
-	int Print() {
-		cout << "Buy:" << endl;
-		for (map<char*, unsigned int>::iterator itr = m_bidMap.begin(); itr != m_bidMap.end(); ++itr) {
-			cout << itr->first << " " << itr->second << endl;
-		}
-		cout << "Sell:" << endl;
-		for (map<char*, unsigned int>::iterator itr = m_offerMap.begin(); itr != m_offerMap.end(); ++itr) {
-			cout << itr->first << " " << itr->second << endl;
-		}
-		return 1;
-	}
+	int updateOrderBook(char* oid, int type, unsigned int price);
+	int Print();
 };
 
 class Product {
@@ -82,35 +31,11 @@ class Product {
 	OrderBook* m_OB;
 	int numProduct;
 public:
-	char* getPID() {
-		if (m_PID) {
-			return m_PID;
-		}
-		return nullptr;
-	}
-
-	OrderBook* getOB(){
-			return m_OB;
-	}
-
-	int& getNumPro() {
-		return numProduct;
-	}
-
-	Product(char* pid = "", OrderBook* ob = nullptr){
-		m_PID = new char[strlen(pid)];
-		strcpy(m_PID, pid);
-		m_OB = ob;
-		numProduct = 1;
-	}
-	int Print() {
-		if (numProduct == 0) {
-			return 0;
-		}
-		cout << m_PID << ":" << endl;
-		m_OB->Print();
-		return 1;
-	}
+	char* getPID();
+	OrderBook* getOB();
+	int& getNumPro();
+	Product(char* pid = "", OrderBook* ob = nullptr);
+	int Print();
 };
 
 class MarketPricesImpl : public MarketPrices {
@@ -119,5 +44,7 @@ class MarketPricesImpl : public MarketPrices {
 public:
 	int OnOrderAdd(char *productId, char *OrderId, int BidOrOffer, int Price) override;
 	int OnOrderDel(char *productId, char *OrderId) override;
-	int Print() override;
+ 	int Print() override;
 };
+
+#endif
