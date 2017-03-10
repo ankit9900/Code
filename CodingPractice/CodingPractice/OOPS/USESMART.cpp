@@ -36,38 +36,32 @@ public:
 };
 int main() {
 	{
-		T p1("ankit", 10);
-		T p2= p1;
-		shared_ptr<T> sp(new T("ankit",10));
-		shared_ptr<T> sp2(new T("ankit", 10));
-		shared_ptr<T> sp3(sp2);
-		shared_ptr<T> sp4(new T("ankit", 10));
+		
+		// Testing Shared and Smart Pointers:
+		T* oo = new T();
+		shared_ptr<T> sp1 = make_shared<T>("ankit", 10);
+		shared_ptr<T> sp2 = sp1;
+		shared_ptr<T> sp3 = sp1;
+		
+		/*weak_ptr<T> wp(sp1);
+		weak_ptr<T> wp1(wp);
+		weak_ptr<T> wp2(wp);
+		*/
+		
 		cout << "---USE SMART ----" << endl;
 	}
-	{
+	/*{
 		cout << "---USE MY OWN SMART POINTER START ----" << endl;
-		SmartPtr<T> sp(new T("ankit", 10));
-		SmartPtr<T> sp2(new T("ankit", 10));
-		SmartPtr<T> sp3(sp2);
-
-		cout << sp3.getRaw() << endl;
-		cout << sp2.getRaw() << endl;
-
-		cout << sp3.getRefCount() << endl;
-		cout << sp2.getRefCount() << endl;
-
-		sp2.reset();
-		cout << sp3.getRefCount() << endl;
-		cout << sp2.getRefCount() << endl;
-
-	    SmartPtr<T> sp4(new T("ankit", 10));
-		SmartPtr<T> sp5;
-		sp5 = sp2;
-		sp->show();
-		sp5->show();
-		SmartPtr<T> sp6(new T("ankit", 10));
+		
+		T* obj = new T;
+		{
+			SmartPtr<T> ss(obj);
+		}
+		{
+			SmartPtr<T> ss2(obj);
+		}
 		cout << "---USE MY OWN SMART POINTER END----" << endl;
-	}
+	}*/
 	
 	system("pause");
 	return 0;
