@@ -9,14 +9,10 @@
 
 using namespace std;
 typedef vector<pair < char*, unsigned int > >  VECTOR_PAIR;
-typedef multiset<unsigned int, char*> MSET;
 
 class OrderBook {
 	VECTOR_PAIR m_bidVec;
 	VECTOR_PAIR m_offerVec;
-
-	MSET m_bidSet;
-	MSET m_offerSet;
 public:
 	VECTOR_PAIR * getBidVec();
 	VECTOR_PAIR * getOfferVec();
