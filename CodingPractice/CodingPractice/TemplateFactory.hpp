@@ -1,23 +1,22 @@
 // Template Factory Method
-
-// A templated factory class
 template <class Base>
 class Factory
 {
 public:
-    virtual Base* getObject() = 0;
+    virtual unique_ptr<Base> getObject() = 0;
     virtual ~Factory(){}
 };
 template <class Base, class Derived>
 class MyFactory:public Factory<Base>
 {
 public:
-    Base* getObject()
+    unique_ptr<Base> getObject()
     {
-        return new Derived();
+        unique_ptr<Base> b(new Derived);
+        return b;
     }
 };
----------------------------------------------------------
+
 class Task
 {
 public:
@@ -49,24 +48,10 @@ public:
                 std::cout<<"Executing VoiceTask "<<std::endl;
         }
 };
-----------------------------
-// Templated function which uses above class    
+
 template<class T>
 void someFrameworkCode(Factory<T>* ab)
 {
-    T* p = ab->getObject();
+    unique_ptr<T> p = ab->getObject();
     p->execute();
-    delete p;
 }
-
-------------------
-
-// USAGE
-
-Factory<Task>* t = new MyFactory<Task, EMailTask>();
-    
-    someFrameworkCode(t);
-
-    Factory<Task>* t2 = new MyFactory<Task, VoiceTask>();
-    
-    someFrameworkCode(t2);
