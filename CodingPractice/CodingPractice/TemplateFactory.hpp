@@ -1,4 +1,6 @@
 // Template Factory Method
+
+// A templated factory class
 template <class Base>
 class Factory
 {
@@ -15,7 +17,7 @@ public:
         return new Derived();
     }
 };
-
+---------------------------------------------------------
 class Task
 {
 public:
@@ -47,7 +49,8 @@ public:
                 std::cout<<"Executing VoiceTask "<<std::endl;
         }
 };
-
+----------------------------
+// Templated function which uses above class    
 template<class T>
 void someFrameworkCode(Factory<T>* ab)
 {
@@ -56,7 +59,7 @@ void someFrameworkCode(Factory<T>* ab)
     delete p;
 }
 
-
+------------------
 
 // USAGE
 
