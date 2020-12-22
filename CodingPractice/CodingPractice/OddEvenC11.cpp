@@ -3,6 +3,18 @@
 #include <iostream>
 #include <algorithm>
 #include <thread>
+// This program uses two threads. One thread prints odd and other even
+// To sync two threads, we use one mutex and one cv
+// cv uses unique lock object
+// create unique lock object using mutex
+// cv wait on lock till condition met
+
+
+// if one threads send notify below happens
+// cv wait will release lock and checks if condition is met
+// if condition is met it will proceed further
+// if condition is not met it will lock itself again, so that other thread can continue.
+
 
 using namespace std;
 
